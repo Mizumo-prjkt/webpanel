@@ -2,7 +2,7 @@
 
 # First we install the npm dependencies
 
-npm install express bulma jquery bcrypt mariadb system-architecture memfs speakeasy qrcode framework7 framework7-icons --save
+npm install express bulma json-bigint jquery bcrypt mariadb system-architecture memfs speakeasy qrcode framework7 framework7-icons --save
 
 if [ $? -ne 0 ]; then
     echo "Error: Failed to install npm dependencies."
