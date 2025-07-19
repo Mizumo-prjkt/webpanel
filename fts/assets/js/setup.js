@@ -92,6 +92,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
     
+    // Additional Settings Popup
+    // ID Tag: card-create-account-pop-settings
+    const cardCreateAccountPopupSettings = document.getElementById('card-create-account-pop-settings');
+    const options_create_btn = document.getElementById('options_create');
+    function openOtherSettings() {
+        Object.assign(cardCreateAccountPopupSettings.style, {
+            display: 'flex',
+        });
+        cardCreateAccountPopupSettings.hidden = !cardCreateAccountPopupSettings.hidden;
+    }
+    options_create_btn.addEventListener('click', openOtherSettings);
+    if (cardCreateAccountPopupSettings) {
+        cardCreateAccountPopupSettings.querySelector('.delete').addEventListener('click', function() {
+            cardCreateAccountPopupSettings.hidden = true
+            Object.assign(cardCreateAccountPopupSettings.style, {
+                display: 'none',
+            });
+        });
+    }
+
 });
 
 
