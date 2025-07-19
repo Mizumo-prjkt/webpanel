@@ -1,15 +1,28 @@
 {
+  "name": "webpanel",
+  "scripts": {
+    "start": "node server.js",
+    "first-time-setup": "node setup.js"
+  },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "bcrypt": "^6.0.0",
     "bulma": "^1.0.4",
+    "cpu-features": "^0.0.10",
+    "device-detector-js": "^3.0.3",
+    "dotenv": "^17.2.0",
     "express": "^5.1.0",
+    "express-jwt": "^8.5.1",
     "framework7": "^8.3.4",
     "framework7-icons": "^5.0.5",
     "jquery": "^3.7.1",
     "json-bigint": "^1.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "linux-os-info": "^2.0.0",
     "mariadb": "^3.4.4",
     "memfs": "^4.17.2",
     "qrcode": "^1.5.4",
+    "socket.io-client": "^4.8.1",
     "speakeasy": "^2.0.0",
     "system-architecture": "^1.0.0"
   }

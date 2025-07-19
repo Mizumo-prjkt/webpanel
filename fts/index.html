@@ -1,0 +1,147 @@
+<!-- Index HTML head -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- This is an index html, for now this page's responsible for 
+            doing checks, then redirect to real setup.html -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Checking</title>
+        <link rel="stylesheet" href="/node_modules/bulma/css/bulma.min.css">
+        <style>
+            html, body {
+                height: 100%;
+            }
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #f5f5f5;
+            }
+            .container {
+                max-width: 600px;
+            }
+        </style>
+    </head>
+    <body>
+        <section class="section">
+            <div class="container">
+                <div id="loading-message">
+                    <div class="notification is-info is-light">
+                        <p class="has-text-centered">Running initial setup checks...</p>
+                    </div>
+                </div>
+                <div id="success-container" style="display: none;">
+                    <!-- Success card will be injected here by the script -->
+                </div>
+                <div id="error-container" style="display: none;">
+                    <!-- Error card will be injected here by the script -->
+                </div>
+            </div>
+        </section>
+
+        <script>
+            // Check if the browser is supported
+            fetch('/api/check-browser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userAgent: navigator.userAgent
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Browser not supported');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Browser check successful, now check MariaDB status
+                return fetch('/api/check-mariadb', {
+                    method: 'POST'
+                });
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.message || 'MariaDB is not running'); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    // Display success message
+                    const successContainer = document.getElementById('success-container');
+                    const loadingMessage = document.getElementById('loading-message');
+
+                    if (loadingMessage) {
+                        loadingMessage.style.display = 'none';
+                    }
+
+                    if (successContainer) {
+                        document.title = 'Setup Check Successful';
+                        successContainer.style.display = 'block';
+                        successContainer.innerHTML = `
+                            <div class="card">
+                                <header class="card-header has-background-success">
+                                    <p class="card-header-title has-text-white">
+                                        Setup Check Successful
+                                    </p>
+                                </header>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <p>All initial setup checks passed successfully.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    setTimeout(() => {
+                    // All checks passed, redirect to the setup page
+                    window.location.href = '/setup.html';
+                    }, 2000);
+
+                }
+            })
+            .catch(error => {
+                // Handle the error, e.g., show an alert or redirect to an error page
+                console.error('Error:', error);
+
+                const loadingMessage = document.getElementById('loading-message');
+                const errorContainer = document.getElementById('error-container');
+
+                if (loadingMessage) {
+                    loadingMessage.style.display = 'none';
+                }
+
+                if (errorContainer) {
+                    document.title = 'Setup Check Failed';
+                    errorContainer.style.display = 'block';
+                    errorContainer.innerHTML = `
+                        <div class="card">
+                            <header class="card-header has-background-danger">
+                                <p class="card-header-title has-text-white">
+                                    Setup Check Failed
+                                </p>
+                            </header>
+                            <div class="card-content">
+                                <div class="content">
+                                    <p>An error occurred during the initial setup checks:</p>
+                                    <div class="notification is-danger is-light">
+                                        ${error.message}
+                                    </div>
+                                    <p>Please resolve the issue and refresh the page to try again.</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // Fallback to alert if the container is not found
+                    alert('A setup check failed: ' + error.message);
+                }
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,152 @@
+<!-- First time setup page -->
+<!-- Part of webpanel, use Bulma Framework only -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome to the First Time Setup for WebPanel</title>
+    <link rel="stylesheet" href="/assets/css/setup.css">
+    <link rel="stylesheet" href="/node_modules/bulma/css/bulma.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id="external-notif" class="mt-4"></div>
+    <section class="section">
+      <div class="container is-hidden" id="setup-popup">
+        <div class="card">
+          <!-- <header class="card-header">
+            <p class="card-header-title">
+              Welcome to WebPanel Setup
+            </p>
+          </header> -->
+          <div class="card-content">
+            <div class="content">
+              <div id="c1">
+                <h2>Welcome to WebPanel Setup</h2>
+                <p>Let's get started with the setup process.</p>
+                <button class="button" id="test-floating-card-popup">Test Floating Card (Debug)</button>
+              </div>
+              <div id="c2" hidden>
+                <h2>This software is in development</h2>
+                <p>However, since it's an opensource project, this small tool will hopefully be fleshed out soon</p>
+                <p>Currently, the software is in at its early stage.<br> So, some functions may not act as it should be. Please report it to the Maintainer's Github Page <a href="https://github.com/Mizumo-prjkt" style="font-style: normal; text-decoration: none;">here</a></p>
+                <p style="text-decoration: underline; font-size: large;">Report Bugs in this software if necessary.</p>
+              </div>
+              <div id="c3" hidden>
+                <h2>Checking Server's Distro</h2>
+                <p>Checking...</p>
+                <p>If you see this, then the JS checks aren't working.<br>This is a major bug, report this issue immediately.</p>
+              </div>
+              <div id="c4" hidden>
+                <!-- Signin -->
+                 <h2>Create your Admin Account</h2>
+                 <p>This will be the primary admin account for your webpanel instance since<br> its the first time it's launched in your server.</p>
+                 <div id="signup-notification" class="mt-4"></div>
+                 <div class="field mt-4">
+                   <label class="label">Username</label>
+                   <div class="control">
+                    <input class="input" type="text" id="username-input" placeholder="ex.: hatsunemiku">
+                   </div>
+                 </div>
+                 <div class="field mt-4">
+                   <label class="label">Password</label>
+                   <div class="control">
+                    <input class="input" type="password" id="password-input" placeholder="************">
+                   </div>
+                   <p class="help">Must be at least 8 characters long</p>
+                 </div>
+                 <div class="field">
+                  <label class="label">Repeat Password</label>
+                  <div class="control">
+                    <input class="input" type="password" id="repeat-password-input" placeholder="************">
+                  </div>
+                 </div>
+                 <div class="mt-4"></div>
+                 <button class="button" id="options_create">Additional Options</button>
+                 <button class="button" id="create-account-btn">Create an account</button>
+                 
+              </div>
+              <div id="c5" hidden>
+                <h2>Test the Credentials</h2>
+                <p>Check if you can log in</p>
+                <div id="testcred-notification" class="mt-4"></div>
+                <div class="field mt-4">
+                  <label class="label">Username</label>
+                  <div class="control">
+                    <input class="input" type="text" id="testcred-username-input" placeholder="ex.: admin | hatsunemiku | yourusernamethatyouinsertedlastpage">
+                  </div>
+                </div>
+                <div class="field mt-4">
+                  <label class="label">Password</label>
+                  <div class="control">
+                    <input class="input" type="password" id="testcred-password-input" placeholder="************">
+                  </div>
+                </div>
+                <button class="button" id="testcred-btn">Test Credentials by logging in</button>
+              </div>
+              <div class="btn-separation">
+                <p></p>
+                <p></p>
+              <!-- Interactive Buttons here -->
+                <button href="#" class="button is-responsive is-link " id="prev-btn" disabled>Previous</button>
+                <button href="#" class="button is-responsive is-link " id="next-btn">Next</button>
+              </div>
+            </div>
+          </div>
+          <!-- <footer class="card-footer">
+            <a href="#" class="card-footer-item" aria-disabled="true">Previous</a>
+            <a href="#" class="card-footer-item">Next</a>
+          </footer> -->
+        </div>
+      </div>      
+    </section>
+    <!-- PCards -->
+    <!-- Im lazy to arrange this shi -->
+                <div class="card-background-style" id="card-pop-bg" hidden>
+                  <div class="test-floating-card-popup-container" id="test-floating-card-popup-container-id" >
+                    <div class="card">
+                      <header class="card-header">
+                        <p class="card-header-title">
+                          Test Floating Card
+                        </p>
+                        <span>
+                          <button class="delete"></button>
+                        </span>
+                      </header>
+                      <div class="card-content">
+                        <div class="content">
+                          <p>This is a test floating card.</p>
+                          <p>Which means the floating card worked???</p>
+                          <p>Which means if you can see this text after pressing the button, <br>then hooray! It works!</p>
+                          <p>But if you see this after landing in the root page, then the script is fked</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-bgstyle-additional-options-creating-account" id="card-create-account-pop-settings" hidden>
+                  <div class="card">
+                    <header class="card-header">
+                      <p class="card-header-title">
+                        Additional Options
+                      </p>
+                      <span>
+                        <button class="delete"></button>
+                      </span>
+                    </header>
+                    <div class="card-content">
+                      <div class="content">
+                        <div class="field mt-4">
+                          <label class="label"></label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    <script src="/assets/js/setup.js"></script>
+    <script src="/assets/js/distrocheck.js"></script>
+    <script src="/assets/js/credtest.js"></script>
+    <script src="/assets/js/authenticator.js"></script>
+  </body>
+</html>
