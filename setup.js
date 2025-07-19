@@ -92,6 +92,7 @@ app.post('/api/basic-ping-test-response', (req, res) => {
 // 3. Ping if the MariaDB is running
 // Do not call the database, just check if the connection can be established
 app.post('/api/check-mariadb', async (req, res) => {
+    const startTime = Date.now();
     let connection;
     try {
         connection = await mariadb.createConnection(dbConfig);
@@ -101,6 +102,8 @@ app.post('/api/check-mariadb', async (req, res) => {
     } finally {
         if (connection) {
             await connection.end();
+            const endtime = Date.now();
+            console.log(`MariaDB connection time: ${endtime - startTime} ms`);
         }
     }
 });
