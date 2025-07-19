@@ -2,7 +2,7 @@
 
 # First we install the npm dependencies
 
-npm install express bulma json-bigint cpu-features device-detector-js jquery bcrypt mariadb system-architecture memfs speakeasy qrcode framework7 framework7-icons linux-os-info express-jwt socket.io-client jsonwebtoken dotenv @fortawesome/fontawesome-svg-core --save
+npm install express bulma json-bigint cpu-features device-detector-js jquery bcrypt mariadb system-architecture memfs speakeasy qrcode framework7 framework7-icons linux-os-info express-jwt socket.io-client jsonwebtoken dotenv @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/free-regular-svg-icons @fortawesome/free-brands-svg-icons @fortawesome/fontawesome-free --save
 
 # Generate a Secret key for the installer
 

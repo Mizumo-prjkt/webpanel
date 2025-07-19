@@ -8,6 +8,7 @@
     <title>Welcome to the First Time Setup for WebPanel</title>
     <link rel="stylesheet" href="/assets/css/setup.css">
     <link rel="stylesheet" href="/node_modules/bulma/css/bulma.min.css">
+    <link rel="stylesheet" href="/node_modules/@fortawesome/fontawesome-svg-core/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
@@ -44,27 +45,27 @@
                  <p>This will be the primary admin account for your webpanel instance since<br> its the first time it's launched in your server.</p>
                  <div id="signup-notification" class="mt-4"></div>
                  <div class="field mt-4">
-                   <label class="label">Username</label>
+                   <label class="label"><i class="fa-regular fa-user"></i> Username</label>
                    <div class="control">
                     <input class="input" type="text" id="username-input" placeholder="ex.: hatsunemiku">
                    </div>
                  </div>
                  <div class="field mt-4">
-                   <label class="label">Password</label>
+                   <label class="label"><i class="fa-solid fa-lock"></i> Password</label>
                    <div class="control">
                     <input class="input" type="password" id="password-input" placeholder="************">
                    </div>
                    <p class="help">Must be at least 8 characters long</p>
                  </div>
                  <div class="field">
-                  <label class="label">Repeat Password</label>
+                  <label class="label"><i class="fa-solid fa-lock"></i> Repeat Password</label>
                   <div class="control">
                     <input class="input" type="password" id="repeat-password-input" placeholder="************">
                   </div>
                  </div>
                  <div class="mt-4"></div>
-                 <button class="button" id="options_create">Additional Options</button>
-                 <button class="button" id="create-account-btn">Create an account</button>
+                 <button class="button" id="options_create"><i class="fa-solid fa-gear"> </i> Additional Options</button>
+                 <button class="button" id="create-account-btn"><i class="fa-solid fa-user-plus"> </i> Create an account</button>
                  
               </div>
               <div id="c5" hidden>
@@ -148,5 +149,8 @@
     <script src="/assets/js/distrocheck.js"></script>
     <script src="/assets/js/credtest.js"></script>
     <script src="/assets/js/authenticator.js"></script>
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script defer src="/node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
   </body>
 </html>
