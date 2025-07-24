@@ -138,9 +138,9 @@
                     </header>
                     <div class="card-content">
                       <div class="content">
-                        <div class="tabs is-centered">
+                        <div class="tabs">
                           <ul>
-                            <li class="is-active">
+                            <li class="is-active" data-tab="1">
                               <a>
                                 <span class="icon is-small">
                                   <i class="fa-solid fa-lock" aria-hidden="true"></i>
@@ -148,7 +148,7 @@
                                 <span>Additional Security Options</span>
                               </a>
                             </li>
-                            <li>
+                            <li data-tab="2">
                               <a>
                                 <span class="icon is-small">
                                   <i class="fa-solid fa-terminal" aria-hidden="true"></i>
@@ -158,6 +158,35 @@
                             </li>
                           </ul>
                         </div>
+                        <!-- Moved tab content inside the popup card content -->
+                        <div class="tab-content-class" id="tab-content" >
+                          <div class="content" data-content="1">
+                            <h3>Additional Security Options</h3>
+                            <p>Enable Two-Factor Authentication (2FA) for enhanced security.</p>
+                            <div class="field mt-4">
+                              <label class="checkbox">
+                                <input type="checkbox" id="enable-2fa-checkbox"> Enable Two-Factor Authentication (2FA)
+                              </label>
+                            </div>
+                            <button class="button is-link" id="setup-2fa-btn">Setup 2FA</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 2FA Setup Popup Card -->
+                <div class="card-background-style" id="card-2fa-setup-bg" hidden>
+                  <div class="card" style="max-width: 400px; margin: auto;">
+                    <header class="card-header">
+                      <p class="card-header-title">2FA Setup</p>
+                      <span>
+                        <button class="delete" id="close-2fa-setup"></button>
+                      </span>
+                    </header>
+                    <div class="card-content">
+                      <div class="content" id="2fa-setup-content">
+                        <!-- QR code and instructions will be injected here -->
                       </div>
                     </div>
                   </div>
@@ -166,6 +195,7 @@
     <script src="/assets/js/distrocheck.js"></script>
     <script src="/assets/js/credtest.js"></script>
     <script src="/assets/js/authenticator.js"></script>
+    <script src="/assets/js/bulma-tabs.js"></script>
     <script src="/node_modules/jquery/dist/jquery.js"></script>
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script defer src="/node_modules/@fortawesome/fontawesome-free/js/all.js"></script>

@@ -303,8 +303,109 @@ app.use((err, req, res, next) => {
     }
 })
 
+// 2FA EP
+app.post('/api/2fa/setup', requireSetupToken, async (req, res) => {
+    const { username } = req.body;
+    if (!username) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Username is required.'
+        });
+    }
+    let connection;
+    try {
+        connection = await mariadb.createConnection(dbConfig);
+        // Check if this user exists in the first place
+        const [user] = await connection.query("SELECT id FROM users WHERE username = ? LIMIT 1", [username]);
+        if (!user) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'User not found.'            
+            });
+        }
+        // IMPORTANT: Storing 2FA Secret
+        // This key should be encrypted at rest
+        await connection.query(
+            "UPDATE users SET two_fa_secret = ? WHERE id = ?",
+            [speakeasy.generateSecret().base32, user.id]
+        );
+        qrcode.toDataURL(speakeasy.generateSecret().otpauth_url, (err, dataUrl) => {
+            if (err) {
+                console.error('Error generating QR code:', err);
+                return res.status(500).json({
+                    status: 'error',
+                    message: 'Failed to generate QR code.'
+                });
+            }
+            res.json({
+                status: 'success',
+                message: '2FA setup successful.',
+                qrCode: dataUrl
+            });
+        });
+        res.status(200).json({
+            status: 'success',
+            message: '2FA setup successful.'
+        });
+    } catch (err) {
+        console.error('Error setting up 2FA:', err);
+        res.status(500).json({
+            status: 'error',
+            message: 'An error occurred while setting up 2FA.',
+            error: err.message
+        });
+    } finally {
+        if (connection) await connection.end();
+    }
+});
 
 
+// 6. Verify 2FA token
+app.post('/api/2fa/verify', requireSetupToken, async (req, res) => {
+    const { username, token } = req.body;
+    if (!username || !token) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Username and token are required.'
+        });
+    }
+    let connection
+    try {
+        connection = await mariadb.createConnection(dbConfig);
+        const [user] = await connection.query("SELECT id, two_fa_secret FROM users WHERE username = ? LIMIT 1", [username]);
+        if (!user || !user['two_fa_secret']) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'User not found or 2FA not set up.'
+            });
+        }
+        const verified = speakeasy.totp.verify({
+            secret: user['two_fa_secret'],
+            encoding: 'base32',
+            token: token
+        });
+        if (verified) {
+            res.json({
+                status: 'success',
+                message: '2FA verification successful.'
+            });
+        } else {
+            res.status(401).json({
+                status: 'error',
+                message: 'Invalid 2FA token.'
+            });
+        }
+    } catch (err) {
+        console.error('Error verifying 2FA:', err);
+        res.status(500).json({
+            status: 'error',
+            message: 'An error occurred while verifying 2FA.',
+            error: err.message
+        });
+    } finally {
+        if (connection) await connection.end();
+    }
+})
 
 
 // End of API endpoints
